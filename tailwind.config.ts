@@ -4,12 +4,12 @@ const config = {
   darkMode: ["class"],
   content: [
     './src/**/*.{ts,tsx}',
-	],
+  ],
   prefix: "",
   theme: {
     container: {
       center: true,
-        padding: "1rem",
+      padding: "1rem",
       screens: {
         "2xl": "1400px",
       },

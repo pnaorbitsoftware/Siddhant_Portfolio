@@ -1,4 +1,5 @@
 @import "clash-grotesk.css";
+@import "locomotive-scroll.css";
 
 @tailwind base;
 @tailwind components;
@@ -55,7 +56,7 @@
     @apply antialiased;
   }
   body {
-    @apply bg-background text-foreground cursor-wait;
+    @apply bg-background text-foreground;
   }
   section {
     scroll-margin-top: 60px;
@@ -91,7 +92,6 @@
     @apply text-sm lowercase tracking-tight text-slate-200;
   }
   .nav-link {
-    /* Remove the styles from nav-link class */
     @apply text-sm lowercase tracking-tight text-slate-400;
   }
 

@@ -6,9 +6,11 @@ import {
   ChevronRight,
   Code2,
   Frame,
-  SearchCheck,
-  Eye,
   MonitorSmartphone,
+  Github,
+  ExternalLink,
+  BookOpen,
+  Rocket,
 } from "lucide-react";
 import { TriangleDownIcon } from "@radix-ui/react-icons";
 import Spline from "@splinetool/react-spline";
@@ -28,74 +30,61 @@ import VanillaTilt from "vanilla-tilt";
 import { motion } from "framer-motion";
 
 const aboutStats = [
-  { label: "Years of experience", value: "3+" },
-  { label: "Technologies mastered", value: "5+" },
-  { label: "Companies worked with", value: "15+" },
+  { label: "Year of Study", value: "First Year" },
+  { label: "Projects Built", value: "5+" },
+  { label: "Technologies", value: "6+" },
 ];
 
 const projects = [
   {
-    title: "Unqueue",
-    description: "E-commerce platform for selling digital products",
-    image: "/assets/unqueue.webm",
-    href: "https://unqueue.shop/",
-  },
-  {
-    title: "InfiniteVPS",
-    description: "High performance VPS hosting solution",
-    image: "/assets/infinitevps.webm",
-    href: "#",
-  },
-  {
-    title: "TranslateBot",
-    description: "Powerful Multilingual Translation Bot for Discord",
-    image: "/assets/translate_bot.webm",
-    href: "https://translatebot.app/",
-  },
-  {
-    title: "Wrona",
-    description: "Robotics-focused technology company",
-    image: "/assets/wrona.jpeg",
-    href: "https://www.wrona.com/",
-  },
-  {
-    title: "This website",
-    description: "My personal website",
+    title: "Personal Portfolio",
+    description: "This website - Built with Next.js, Tailwind, and Framer Motion",
     image: "/assets/portfolio.webm",
-    href: "https://github.com/wendoj/portfolio",
+    tech: ["Next.js", "TypeScript", "Tailwind"],
+    href: "https://github.com/siddhant-atole/portfolio",
+    live: "#",
+  },
+  {
+    title: "Weather App",
+    description: "Real-time weather application using OpenWeather API",
+    image: "/assets/weather.webm",
+    tech: ["React", "API", "CSS"],
+    href: "#",
+    live: "#",
+  },
+  {
+    title: "Todo List App",
+    description: "Clean and simple task management with local storage",
+    image: "/assets/todo.webm",
+    tech: ["JavaScript", "HTML", "CSS"],
+    href: "#",
+    live: "#",
+  },
+  {
+    title: "Calculator",
+    description: "Modern calculator with dark mode support",
+    image: "/assets/calculator.webm",
+    tech: ["React", "CSS Modules"],
+    href: "#",
+    live: "#",
   },
 ];
 
-const services = [
+const skills = [
   {
-    service: "Frontend Development",
-    description:
-      "Creating stellar user interfaces and web experiences using the latest technologies.",
+    category: "Frontend",
+    items: ["HTML/CSS", "JavaScript", "React", "Tailwind"],
     icon: Code2,
   },
   {
-    service: "UX Design",
-    description:
-      "Building intuitive, user-centric designs that drive engagement and conversion.",
-    icon: Frame,
+    category: "Learning",
+    items: ["TypeScript", "Next.js", "Node.js", "UI/UX"],
+    icon: BookOpen,
   },
   {
-    service: "SEO Optimization",
-    description:
-      "Enhancing your website's visibility in search engines for increased organic traffic.",
-    icon: SearchCheck,
-  },
-  {
-    service: "Responsive Design",
-    description:
-      "Designing websites that look and perform equally well on all devices and screen sizes.",
-    icon: MonitorSmartphone,
-  },
-  {
-    service: "Backend Development",
-    description:
-      "Developing robust, scalable server-side logic for a wide range of web applications.",
-    icon: Eye,
+    category: "Tools",
+    items: ["Git", "VS Code", "Figma", "Vercel"],
+    icon: Rocket,
   },
 ];
 
@@ -135,7 +124,6 @@ export default function Home() {
 
         if (li.getAttribute("href") === `#${current}`) {
           li.classList.add("nav-active");
-          console.log(li.getAttribute("href"));
         }
       });
     }
@@ -190,9 +178,9 @@ export default function Home() {
               data-scroll-speed=".09"
               className="flex flex-row items-center space-x-1.5"
             >
-              <span className={styles.pill}>next.js</span>
-              <span className={styles.pill}>tailwindcss</span>
-              <span className={styles.pill}>typescript</span>
+              <span className={styles.pill}>first year</span>
+              <span className={styles.pill}>diploma IT</span>
+              <span className={styles.pill}>learning daily</span>
             </div>
             <div>
               <h1
@@ -202,11 +190,11 @@ export default function Home() {
                 data-scroll-direction="horizontal"
               >
                 <span className="text-6xl tracking-tighter text-foreground 2xl:text-8xl">
-                  Hello, I&apos;m
+                  Hi, I'm
                   <br />
                 </span>
                 <span className="clash-grotesk text-gradient text-6xl 2xl:text-8xl">
-                  WendoJ.
+                  Siddhant Atole.
                 </span>
               </h1>
               <p
@@ -215,8 +203,9 @@ export default function Home() {
                 data-scroll-speed=".06"
                 className="mt-1 max-w-lg tracking-tight text-muted-foreground 2xl:text-xl"
               >
-                An experienced full-stack website developer with a passion for
-                crafting unique digital experiences.
+                First-year Information Technology diploma student passionate 
+                about web development. Currently building projects and learning 
+                something new every day.
               </p>
             </div>
             <span
@@ -225,16 +214,16 @@ export default function Home() {
               data-scroll-speed=".06"
               className="flex flex-row items-center space-x-1.5 pt-6"
             >
-              <Link href="mailto:wendoj@proton.me" passHref>
+              <Link href="#contact" passHref>
                 <Button>
                   Get in touch <ChevronRight className="ml-1 h-4 w-4" />
                 </Button>
               </Link>
               <Button
                 variant="outline"
-                onClick={() => scrollTo(document.querySelector("#about"))}
+                onClick={() => scrollTo(document.querySelector("#projects"))}
               >
-                Learn more
+                View my work
               </Button>
             </span>
 
@@ -244,7 +233,7 @@ export default function Home() {
                 isScrolled && styles["scroll--hidden"],
               )}
             >
-              Scroll to discover{" "}
+              Scroll to explore{" "}
               <TriangleDownIcon className="mt-1 animate-bounce" />
             </div>
           </div>
@@ -260,7 +249,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* About */}
+        {/* About - Updated for fresher */}
         <section id="about" data-scroll-section>
           <div
             data-scroll
@@ -268,20 +257,29 @@ export default function Home() {
             data-scroll-position="top"
             className="my-14 flex max-w-6xl flex-col justify-start space-y-10"
           >
-            <h2 className="py-16  pb-2 text-3xl font-light leading-normal tracking-tighter text-foreground xl:text-[40px]">
-              I&apos;m an experienced full-stack developer proficient in{" "}
+            <h2 className="py-16 pb-2 text-3xl font-light leading-normal tracking-tighter text-foreground xl:text-[40px]">
+              I'm a first-year diploma student in{" "}
+              <span className="text-gradient">Information Technology</span> at 
+              [Your College Name]. I started coding a year ago and instantly 
+              fell in love with creating things for the web. Currently focused on 
+              mastering{" "}
               <Link
-                href="https://create.t3.gg/"
+                href="https://react.dev/"
                 target="_blank"
                 className="underline"
               >
-                TypeScript, Tailwind, and Next.js
-              </Link>{" "}
-              since 2021. My experience spans from startups to mid-sized
-              companies, where I&apos;ve been instrumental in the entire product
-              design process; from ideation and wireframing, through
-              prototyping, to the delivery of the final product, all while
-              efficiently collaborating with cross-functional teams.
+                React
+              </Link>
+              ,{" "}
+              <Link
+                href="https://nextjs.org/"
+                target="_blank"
+                className="underline"
+              >
+                Next.js
+              </Link>
+              , and modern web development practices. I'm eager to learn, grow, 
+              and contribute to real-world projects.
             </h2>
             <div className="grid grid-cols-2 gap-8 xl:grid-cols-3">
               {aboutStats.map((stat) => (
@@ -301,7 +299,45 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Projects */}
+        {/* Skills Section - New */}
+        <section id="skills" data-scroll-section className="my-32">
+          <div data-scroll data-scroll-speed=".4" className="text-center mb-16">
+            <span className="text-gradient clash-grotesk text-sm font-semibold tracking-tighter">
+              📚 Current Stack
+            </span>
+            <h2 className="mt-3 text-4xl font-semibold tracking-tight xl:text-6xl">
+              Skills I'm Building
+            </h2>
+            <p className="mt-1.5 text-base tracking-tight text-muted-foreground xl:text-lg max-w-2xl mx-auto">
+              Here's what I'm learning and working with right now. Growing every day!
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            {skills.map((skillGroup, idx) => (
+              <motion.div
+                key={skillGroup.category}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: idx * 0.1 }}
+                viewport={{ once: true }}
+                className="bg-white/5 p-8 rounded-lg backdrop-blur-sm"
+              >
+                <skillGroup.icon className="text-primary mb-4" size={24} />
+                <h3 className="text-xl font-medium mb-4">{skillGroup.category}</h3>
+                <ul className="space-y-2">
+                  {skillGroup.items.map((item) => (
+                    <li key={item} className="text-muted-foreground">
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+            ))}
+          </div>
+        </section>
+
+        {/* Projects - Updated for fresher */}
         <section id="projects" data-scroll-section>
           {/* Gradient */}
           <div className="relative isolate -z-10">
@@ -320,14 +356,13 @@ export default function Home() {
           </div>
           <div data-scroll data-scroll-speed=".4" className="my-64">
             <span className="text-gradient clash-grotesk text-sm font-semibold tracking-tighter">
-              ✨ Projects
+              ✨ My Work
             </span>
-            <h2 className="mt-3 text-4xl font-semibold tracking-tight tracking-tighter xl:text-6xl">
-              Streamlined digital experiences.
+            <h2 className="mt-3 text-4xl font-semibold tracking-tight xl:text-6xl">
+              Projects I've Built.
             </h2>
-            <p className="mt-1.5 text-base tracking-tight text-muted-foreground xl:text-lg">
-              I&apos;ve worked on a variety of projects, from small websites to
-              large-scale web applications. Here are some of my favorites:
+            <p className="mt-1.5 text-base tracking-tight text-muted-foreground xl:text-lg max-w-2xl">
+              Small projects that helped me learn. Each one taught me something new!
             </p>
 
             {/* Carousel */}
@@ -335,34 +370,37 @@ export default function Home() {
               <Carousel setApi={setCarouselApi} className="w-full">
                 <CarouselContent>
                   {projects.map((project) => (
-                    <CarouselItem key={project.title} className="md:basis-1/2">
-                      <Card id="tilt">
+                    <CarouselItem key={project.title} className="md:basis-1/2 lg:basis-1/3">
+                      <Card id="tilt" className="h-full">
                         <CardHeader className="p-0">
-                          <Link href={project.href} target="_blank" passHref>
-                            {project.image.endsWith(".webm") ? (
-                              <video
-                                src={project.image}
-                                autoPlay
-                                loop
-                                muted
-                                className="aspect-video h-full w-full rounded-t-md bg-primary object-cover"
-                              />
-                            ) : (
-                              <Image
-                                src={project.image}
-                                alt={project.title}
-                                width={600}
-                                height={300}
-                                quality={100}
-                                className="aspect-video h-full w-full rounded-t-md bg-primary object-cover"
-                              />
-                            )}
-                          </Link>
+                          <div className="aspect-video h-full w-full rounded-t-md bg-primary/20 flex items-center justify-center">
+                            <Code2 size={40} className="text-primary/50" />
+                          </div>
                         </CardHeader>
-                        <CardContent className="absolute bottom-0 w-full bg-background/50 backdrop-blur">
-                          <CardTitle className="border-t border-white/5 p-4 text-base font-normal tracking-tighter">
-                            {project.description}
+                        <CardContent className="p-6">
+                          <CardTitle className="text-xl font-medium mb-2">
+                            {project.title}
                           </CardTitle>
+                          <p className="text-muted-foreground text-sm mb-4">
+                            {project.description}
+                          </p>
+                          <div className="flex flex-wrap gap-2 mb-4">
+                            {project.tech.map((tech) => (
+                              <span key={tech} className="text-xs px-2 py-1 bg-white/10 rounded">
+                                {tech}
+                              </span>
+                            ))}
+                          </div>
+                          <div className="flex gap-3">
+                            <Link href={project.href} target="_blank" className="text-sm hover:text-primary transition">
+                              <Github size={18} />
+                            </Link>
+                            {project.live !== "#" && (
+                              <Link href={project.live} target="_blank" className="text-sm hover:text-primary transition">
+                                <ExternalLink size={18} />
+                              </Link>
+                            )}
+                          </div>
                         </CardContent>
                       </Card>
                     </CarouselItem>
@@ -381,55 +419,6 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Services */}
-        <section id="services" data-scroll-section>
-          <div
-            data-scroll
-            data-scroll-speed=".4"
-            data-scroll-position="top"
-            className="my-24 flex flex-col justify-start space-y-10"
-          >
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{
-                duration: 1,
-                staggerChildren: 0.5,
-              }}
-              viewport={{ once: true }}
-              className="grid items-center gap-1.5 md:grid-cols-2 xl:grid-cols-3"
-            >
-              <div className="flex flex-col py-6 xl:p-6">
-                <h2 className="text-4xl font-medium tracking-tight">
-                  Need more info?
-                  <br />
-                  <span className="text-gradient clash-grotesk tracking-normal">
-                    I got you.
-                  </span>
-                </h2>
-                <p className="mt-2 tracking-tighter text-secondary-foreground">
-                  Here are some of the services I offer. If you have any
-                  questions, feel free to reach out.
-                </p>
-              </div>
-              {services.map((service) => (
-                <div
-                  key={service.service}
-                  className="flex flex-col items-start rounded-md bg-white/5 p-14 shadow-md backdrop-blur transition duration-300 hover:-translate-y-0.5 hover:bg-white/10 hover:shadow-md"
-                >
-                  <service.icon className="my-6 text-primary" size={20} />
-                  <span className="text-lg tracking-tight text-foreground">
-                    {service.service}
-                  </span>
-                  <span className="mt-2 tracking-tighter text-muted-foreground">
-                    {service.description}
-                  </span>
-                </div>
-              ))}
-            </motion.div>
-          </div>
-        </section>
-
         {/* Contact */}
         <section id="contact" data-scroll-section className="my-64">
           <div
@@ -439,16 +428,23 @@ export default function Home() {
             className="flex flex-col items-center justify-center rounded-lg bg-gradient-to-br from-primary/[6.5%] to-white/5 px-8 py-16 text-center xl:py-24"
           >
             <h2 className="text-4xl font-medium tracking-tighter xl:text-6xl">
-              Let&apos;s work{" "}
-              <span className="text-gradient clash-grotesk">together.</span>
+              Let's{" "}
+              <span className="text-gradient clash-grotesk">connect.</span>
             </h2>
-            <p className="mt-1.5 text-base tracking-tight text-muted-foreground xl:text-lg">
-              I&apos;m currently available for freelance work and open to
-              discussing new projects.
+            <p className="mt-1.5 text-base tracking-tight text-muted-foreground xl:text-lg max-w-2xl">
+              I'm looking for internship opportunities and love connecting with 
+              fellow developers. Feel free to reach out!
             </p>
-            <Link href="mailto:wendoj@proton.me" passHref>
-              <Button className="mt-6">Get in touch</Button>
-            </Link>
+            <div className="flex gap-4 mt-6">
+              <Link href="mailto:siddhant.atole@email.com" passHref>
+                <Button>Email me</Button>
+              </Link>
+              <Link href="https://github.com/siddhant-atole" target="_blank" passHref>
+                <Button variant="outline">
+                  <Github className="mr-2 h-4 w-4" /> GitHub
+                </Button>
+              </Link>
+            </div>
           </div>
         </section>
       </div>
