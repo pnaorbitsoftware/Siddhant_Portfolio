@@ -1,5 +1,5 @@
 import { type AppType } from "next/dist/shared/lib/utils";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/router";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -17,8 +17,9 @@ const dmSans = DM_Sans({
 const MyApp: AppType = ({ Component, pageProps }) => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const scrollRef = useRef<any>(null);
 
-  // Handle page transitions
+  // Page transition loader
   useEffect(() => {
     const handleStart = () => setLoading(true);
     const handleComplete = () => setLoading(false);
@@ -34,63 +35,47 @@ const MyApp: AppType = ({ Component, pageProps }) => {
     };
   }, [router]);
 
-  // Initialize smooth scroll
+  // Locomotive Scroll Init
   useEffect(() => {
-    if (typeof window === 'undefined') return;
-
-    let scrollInstance: any = null;
+    if (typeof window === "undefined") return;
 
     const initScroll = async () => {
-      try {
-        // Dynamically import locomotive-scroll
-        const LocomotiveScroll = (await import('locomotive-scroll')).default;
-        const scrollEl = document.querySelector('[data-scroll-container]');
-        
-        if (scrollEl) {
-          // Initialize with correct options for the version you're using
-          scrollInstance = new LocomotiveScroll({
-            el: scrollEl as HTMLElement,
-            smooth: true,
-            multiplier: 0.8,
-            lerp: 0.05, // Linear interpolation (0-1) for smoothness
-            smartphone: {
-              smooth: true,
-              breakpoint: 767
-            },
-            tablet: {
-              smooth: true,
-              breakpoint: 1024
-            }
-          });
+      const LocomotiveScroll = (await import("locomotive-scroll")).default;
+      const scrollEl = document.querySelector("[data-scroll-container]");
 
-          // For locomotive-scroll v5+, update might not exist
-          // Use a safer approach - just reload if needed
-          setTimeout(() => {
-            if (scrollInstance && typeof scrollInstance.update === 'function') {
-              scrollInstance.update();
-            } else if (scrollInstance && typeof scrollInstance.init === 'function') {
-              scrollInstance.init();
-            }
-          }, 500);
-        }
-      } catch (error) {
-        console.error('Failed to initialize smooth scroll:', error);
+      if (!scrollEl) return;
+
+      if (scrollRef.current) {
+        scrollRef.current.destroy();
       }
+
+      scrollRef.current = new LocomotiveScroll({
+        el: scrollEl as HTMLElement,
+        smooth: true,
+        multiplier: 0.8,
+        lerp: 0.05,
+        smartphone: {
+          smooth: true,
+        },
+        tablet: {
+          smooth: true,
+          breakpoint: 1024,
+        },
+      });
     };
 
     initScroll();
 
-    // Cleanup
     return () => {
-      if (scrollInstance && typeof scrollInstance.destroy === 'function') {
-        scrollInstance.destroy();
+      if (scrollRef.current) {
+        scrollRef.current.destroy();
+        scrollRef.current = null;
       }
     };
-  }, [router.pathname]); // Re-initialize on route change
+  }, [router.pathname]);
 
   return (
     <div lang="en" className={`${dmSans.variable} font-sans`}>
-      {/* Page transition overlay */}
       <AnimatePresence>
         {loading && (
           <motion.div
@@ -99,24 +84,18 @@ const MyApp: AppType = ({ Component, pageProps }) => {
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-[100] bg-background/80 backdrop-blur-sm flex items-center justify-center"
           >
-            <div className="relative">
-              <div className="w-16 h-16 border-4 border-primary/20 border-t-primary rounded-full animate-spin" />
-              <span className="absolute inset-0 flex items-center justify-center text-xs text-primary">
-                SA
-              </span>
-            </div>
+            <div className="w-16 h-16 border-4 border-primary/20 border-t-primary rounded-full animate-spin" />
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Main content with page transition */}
       <AnimatePresence mode="wait">
         <motion.div
           key={router.pathname}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
-          transition={{ duration: 0.3, ease: "easeInOut" }}
+          transition={{ duration: 0.3 }}
         >
           <Component {...pageProps} />
         </motion.div>

@@ -254,44 +254,35 @@ export default function Home() {
   const heroScale = useTransform(scrollYProgress, [0, 1], [1, 0.8]);
 
   // Carousel setup
-  useEffect(() => {
-    if (!carouselApi) return;
+ // Vanilla Tilt effect (TYPE SAFE)
+useEffect(() => {
+  if (typeof window === "undefined") return;
 
-    setCount(carouselApi.scrollSnapList().length);
-    setCurrent(carouselApi.selectedScrollSnap() + 1);
+  const tiltElements = Array.from(
+    document.querySelectorAll<HTMLElement>("[data-tilt]")
+  );
 
-    carouselApi.on("select", () => {
-      setCurrent(carouselApi.selectedScrollSnap() + 1);
+  if (tiltElements.length > 0) {
+    VanillaTilt.init(tiltElements, {
+      max: 8,
+      speed: 400,
+      glare: true,
+      "max-glare": 0.2,
+      gyroscope: true,
+      perspective: 900,
+      scale: 1.02,
     });
-  }, [carouselApi]);
+  }
 
-  // Vanilla Tilt effect
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-    
-    const tiltElements = document.querySelectorAll('[data-tilt]');
-    if (tiltElements.length > 0) {
-      VanillaTilt.init(tiltElements, {
-        max: 8,
-        speed: 400,
-        glare: true,
-        "max-glare": 0.2,
-        gyroscope: true,
-        perspective: 900,
-        scale: 1.02,
-      });
-    }
-
-    return () => {
-      if (tiltElements.length > 0) {
-        tiltElements.forEach((el) => {
-          if (el && (el as any).vanillaTilt) {
-            (el as any).vanillaTilt.destroy();
-          }
-        });
+  return () => {
+    tiltElements.forEach((el) => {
+      const tilt = (el as any).vanillaTilt;
+      if (tilt) {
+        tilt.destroy();
       }
-    };
-  }, []);
+    });
+  };
+}, []);
 
   const scrollToSection = useCallback((sectionId: string) => {
     const section = document.querySelector(sectionId);
