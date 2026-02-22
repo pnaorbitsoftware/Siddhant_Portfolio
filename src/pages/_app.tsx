@@ -55,7 +55,6 @@ const MyApp: AppType = ({ Component, pageProps }) => {
             lerp: 0.05, // Linear interpolation (0-1) for smoothness
             smartphone: {
               smooth: true,
-              breakpoint: 767
             },
             tablet: {
               smooth: true,
