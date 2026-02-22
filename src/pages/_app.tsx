@@ -42,6 +42,30 @@ const MyApp: AppType = ({ Component, pageProps }) => {
     const initScroll = async () => {
       const LocomotiveScroll = (await import("locomotive-scroll")).default;
       const scrollEl = document.querySelector("[data-scroll-container]");
+      try {
+        // Dynamically import locomotive-scroll
+        const LocomotiveScroll = (await import('locomotive-scroll')).default;
+        const scrollEl = document.querySelector('[data-scroll-container]');
+        
+        if (scrollEl) {
+          // Initialize with correct options for the version you're using
+          const scrollInstance = new LocomotiveScroll({
+            el: scrollEl as HTMLElement,
+            smooth: true,
+            multiplier: 0.8,
+            lerp: 0.05, // Linear interpolation (0-1) for smoothness
+            smartphone: {
+              smooth: true,
+            },
+            tablet: {
+              smooth: true,
+              breakpoint: 1024
+            }
+          });
+        }
+      } catch (error) {
+        console.error("Failed to load locomotive-scroll:", error);
+      }
 
       if (!scrollEl) return;
 
